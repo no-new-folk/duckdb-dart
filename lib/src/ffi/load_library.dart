@@ -12,7 +12,7 @@ DynamicLibrary _defaultOpen() {
   if (Platform.isAndroid) {
     return DynamicLibrary.open('libduckdb.so');
   } else if (Platform.isIOS) {
-    return DynamicLibrary.open('dart_duckdb.framework/duckdb');
+    return DynamicLibrary.open('dart_duckdb.framework/dart_duckdb');
   } else if (Platform.isMacOS) {
     DynamicLibrary result;
     result = DynamicLibrary.process();
