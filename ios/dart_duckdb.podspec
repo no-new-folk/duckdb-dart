@@ -3,12 +3,13 @@
 # Run `pod lib lint duckdb.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
+  # ... (name, version, summary などは変更なし) ...
   s.name             = 'dart_duckdb'
   s.version          = File.read(File.join('..', 'pubspec.yaml')).match(/version:\s+(\d+\.\d+\.\d+)/)[1]
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
-                        DESC
+                       DESC
   s.homepage         = 'https://tigereye.com'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Tigereye' => 'email@example.com' }
@@ -17,17 +18,30 @@ A new flutter plugin project.
   s.dependency 'Flutter'
 
   s.platform = :ios, '11.0'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
 
-  s.vendored_frameworks = 'Libraries/release/duckdb.framework'
+  # --- ここからが重要な変更点 ---
 
-  # prepare_command の代わりに script_phases を使用する
+  # 1. vendored_frameworks は削除するかコメントアウトします
+  # s.vendored_frameworks = 'Libraries/release/duckdb.framework'
+
+  # 2. pod_target_xcconfig を使ってリンカフラグを追加します
+  s.pod_target_xcconfig = { 
+    'DEFINES_MODULE' => 'YES',
+    # OTHER_LDFLAGS (その他のリンカフラグ) を設定
+    # -F はフレームワークの検索パスを追加するフラグ
+    # -framework はリンクするフレームワーク名を指定するフラグ
+    'OTHER_LDFLAGS' => '-F "${PODS_ROOT}/dart_duckdb/Libraries/release" -framework "duckdb"'
+  }
+
+  # --- ここまでが重要な変更点 ---
+
   s.script_phases = [
     {
       :name => 'Download DuckDB Framework',
       :script => <<-SCRIPT
         set -e
+        # 実行時のカレントディレクトリは ${PODS_ROOT}/dart_duckdb になります
         FRAMEWORK_DIR="Libraries/release/duckdb.framework"
         if [ ! -d "$FRAMEWORK_DIR" ]; then
           echo "Downloading DuckDB library..."
