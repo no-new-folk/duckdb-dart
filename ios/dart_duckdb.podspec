@@ -29,7 +29,7 @@ A new flutter plugin project.
       :script => <<-SCRIPT
         set -e
         FRAMEWORK_DIR="Libraries/release/duckdb.framework"
-        if [ ! -d "$FRAME_WORK_DIR" ]; then
+        if [ ! -d "$FRAMEWORK_DIR" ]; then
           echo "Downloading DuckDB library..."
           mkdir -p Libraries/release
           curl -L -o duckdb-framework-ios.zip "https://github.com/TigerEyeLabs/duckdb-dart/releases/download/v1.2.0/duckdb-framework-ios.zip"
