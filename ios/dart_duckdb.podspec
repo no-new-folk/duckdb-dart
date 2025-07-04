@@ -4,24 +4,23 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'dart_duckdb'
-  s.version          = File.read(File.join('..', '..', 'pubspec.yaml')).match(/version:\s*(\d+\.\d+\.\d+)/)[1]
+  s.version          = File.read(File.join('..', 'pubspec.yaml')).match(/version:\s+(\d+\.\d+\.\d+)/)[1]
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
-                       DESC
+                        DESC
   s.homepage         = 'https://tigereye.com'
-  s.license          = { :file => '../../LICENSE' }
+  s.license          = { :file => '../LICENSE' }
   s.author           = { 'Tigereye' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files     = 'Classes/**/*'
   s.dependency 'Flutter'
 
   s.platform = :ios, '11.0'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
 
-  # vendored_frameworks の設定は s.ios.vendored_framework ではなく s.vendored_frameworks が一般的です
-  s.vendored_frameworks = 'Libraries/release/duckdb.framework'
+  s.ios.vendored_framework = 'Libraries/release/duckdb.framework'
 
   # prepare_command の代わりに script_phases を使用する
   s.script_phases = [
