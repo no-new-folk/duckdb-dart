@@ -20,7 +20,7 @@ A new flutter plugin project.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
 
-  s.ios.vendored_framework = 'Libraries/release/duckdb.framework'
+  s.vendored_framework = 'Libraries/release/duckdb.framework'
 
   # prepare_command の代わりに script_phases を使用する
   s.script_phases = [
